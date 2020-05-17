@@ -20,15 +20,23 @@ echo "Thanks Bye"
 ;;
 true)
 
-    if [ $option -eq 1 ]; then
-    ./foldermaker.sh
-    elif [ $option -eq 2 ] ; then
+    case $option in
+    1)
+     ./foldermaker.sh
+     ;;
+    2)
     ./foldercopier.sh
-    elif [ $option -eq 3 ] ; then
-    ./setPassword.sh
-    else 
+    ;;
+    3)
+     ./setPassword.sh
+    ;;
+     *)
     echo " please enter correct number "
-    fi
+    ;;
+    esac
+    
+    
+   
 ;;
 
 esac
