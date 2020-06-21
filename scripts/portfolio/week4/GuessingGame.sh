@@ -4,35 +4,35 @@
  printError()
  {
      echo -e "\033[31mERROR:\033[0m $1"
-}
+ }
  
  #This function will get a value between the 2nd and 3rd arguments
  getNumber()
  {
      read -p "$1: "
- while (( $REPLY < $2 || $REPLY> $3 )); do
- printError "Input must be between $2 and $3"
+    while (( $REPLY < $2 || $REPLY> $3 )); do
+    printError "Input must be between $2 and $3"
 
- read -p "$1: "
+    read -p "$1: "
 
- done
+    done
  }
   
 checkNumber()
  {
     
- while (( $REPLY != "42" )); do
- if [[ $REPLY < "42" ]] ; then
- echo "Too Low!"
- getNumber "please type a number between 1 and 100" 1 100
-else 
-echo "Too High!"
- getNumber "please type a number between 1 and 100" 1 100
+    while (( $REPLY != "42" )); do
+        if [[ $REPLY < "42" ]] ; then
+            echo "Too Low!"
+            getNumber "please type a number between 1 and 100" 1 100
+        else 
+            echo "Too High!"
+            getNumber "please type a number between 1 and 100" 1 100
 
- fi
+        fi
 
- done
- }
+    done
+}
 
  
  echo "this is the start of the script"
@@ -40,5 +40,5 @@ echo "Too High!"
  checkNumber
 
 
- echo "Correct!"
+ echo "Right!"
  
