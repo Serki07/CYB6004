@@ -30,7 +30,7 @@ if [ $? -eq 0 ]; then
     echo " 2019 "
     echo " 2018 "
     echo -e " 2017${Reset}" 
-    echo " Exit" 
+    echo " exit" 
 
     correct=true  
 
@@ -49,7 +49,7 @@ case $correct in
         while true 
         do 
             #accept input from user
-            read -p "Please select the year or exit: " year
+            read -p "Please type the year from the menu or exit: " year
             
             #check the user input
             case $year in
@@ -75,7 +75,7 @@ case $correct in
                     ;;
                 *)
                     #for all other inputs print error
-                    echo "Please enter the correct year!"
+                    echo -e "${Red}Please enter the correct year from menu!${Reset}"
                     exit 4
                     ;;
             esac
@@ -90,19 +90,18 @@ case $correct in
             sed  -i "s/\"dashboard_/\ndashboard_/g;" $year.txt 
 
             #match the given string and save the line in the approprate file 
-            grep -r stat_summary_amount_lost $year.txt >autosumary.txt
+            #grep -r stat_summary_amount_lost $year.txt >autosumary.txt
             grep -r dashboard_top_ten_amount_lost $year.txt >autotoptenamount.txt
             grep -r dashboard_top_ten_number $year.txt >autotopten.txt
             grep -r dashboard_amounts_lost_monthly $year.txt >automonthly.txt
 
             #match the given regular expressions and replace them appropraitley 
-            sed -i " s/\"stat_summary_number_of_reports/\nStat_Summary_Number_of_Reports/g; s/\"stat_summary_reports_with_financial_losses/\nStat_Summary_Reports_with_Financial_losses/g; " autosumary.txt
             sed -i "s/labels/\nScam_Catagory/g; s/datasets/\ndatasets/g; s/amount_lost\"\,\"tooltip\"/\nAmount_Lost/g; s/\legend\"\:\"/\nlegend/g; " autotoptenamount.txt 
             sed -i " s/labels/\nScam_Catagory/g; s/datasets/\ndatasets/g; s/number_of_reports\"\,\"tooltip\"/\nNumber_of_Reports/g; s/\"legend\"\:\"/\nlegend/g" autotopten.txt
             sed -i " s/labels/\nMonth/g; s/datasets/\ndatasets/g; s/amount_lost\"\,\"tooltip/\nAmount_Lost/g; s/number_of_reports\"\,\"tooltip\"/\nNumber_of_Reports/g; s/\"legend\"\:\"/\nlegend/g; s/\"type\":\"line\"/\ntype_line/g; s/\"type\":\"bar\"/\ntype_line/g " automonthly.txt
             
-            sed -i "/datasets.*\"yAxisID\":\"/d; /dashboard/d; s/Amount lost\://g; /legend/d; s/\[//g; s/\]//g; s/[{]//g; s/[}]//g; s/\"//g; /Scam_Catagory/ {s/:/: /g; s/,/, /g}; s/, /: /g; s/,//g; s/[\]u0026 //g " autotoptenamount.txt
-            sed -i "/datasets.*\"yAxisID\":\"/d; /dashboard/d; s/Number of reports\://g; /legend/d; s/\[//g; s/\]//g; s/[{]//g; s/[}]//g; s/\"//g; /Scam_Catagory/ {s/:/, /g; s/,/, /g}; s/, /: /g; s/,//g; s/[\]u0026 //g" autotopten.txt
+            sed -i "/datasets.*\"yAxisID\":\"/d; /dashboard/d; s/Amount lost\://g; /legend/d; s/\[//g; s/\]//g; s/[{]//g; s/[}]//g; s/\"//g; /Scam_Catagory/ {s/:/: /g; s/,/, /g}; s/, /: /g; s/,//g; s/[\]u0026 //g; s/life:  arrest/life, arrest/g " autotoptenamount.txt
+            sed -i "/datasets.*\"yAxisID\":\"/d; /dashboard/d; s/Number of reports\://g; /legend/d; s/\[//g; s/\]//g; s/[{]//g; s/[}]//g; s/\"//g; /Scam_Catagory/ {s/:/, /g; s/,/, /g}; s/, /: /g; s/,//g; s/[\]u0026 //g; s/life:  arrest/life, arrest/g" autotopten.txt
             sed -i "/datasets.*\"yAxisID\":\"/d; /dashboard/d; /type_/d; /legend/d; s/\[//g; s/\[//g; /Month/ {s/:/, /g; s/,/, /g}; s/\]//g; s/[{]//g; s/[}]//g; s/\"//g; s/Number of reports\://g; s/Amount lost\://g; s/:/,/g; s/, /: /g; s/,//g; s/[\]u0026 //g" automonthly.txt
             
             #================================================================================================================================================================
@@ -168,8 +167,8 @@ case $correct in
                 #print calculated outputs    
                 print "Total number of reported scams: ""\033[31m" report "\033[0m""\n" 
                 print "Total amount of money lost due to Scam: " "\033[31m" currency lost "\033[0m" "\n"
-                print "Average number of reported scam every month: " int(report/12) "\n" 
-                print "Average amount of money lost every month: " currency int(lost/12) "\n" 
+                print "Average number of reported scam every month: " "\033[35m" int(report/12) "\033[0m" "\n" 
+                print "Average amount of money lost every month: " "\033[35m" currency int(lost/12) "\033[0m" "\n" 
                 print "The highest amount of money lost in a month ""\033[31m" currency highestloss "\033[0m" "\n"
                 print "The lowest amount of money lost in a month " "\033[33m" currency lowestloss "\033[0m""\n"
                                 
@@ -192,14 +191,14 @@ case $correct in
             echo -e "${Purple}Top 5 Reported Scam Catagories${Reset}"
             awk 'BEGIN{
                 FS=":";
-                printf("\033[36m_____________________\033[0m________________________________________________________________________________________________________________________________\n")
+                printf("\033[36m_____________________\033[0m_________________________________________________________________________________________________________________________________________\n")
             }
             {
 
-                printf("\033[36m|%-18s|\033[0m%-18s|%-24s|%-20s|%-31s|%-32s|\n",$1,$2,$3,$4,$5,$6);
+                printf("\033[36m|%-18s|\033[0m%-18s|%-33s|%-20s|%-31s|%-32s|\n",$1,$2,$3,$4,$5,$6);
             }
             END{
-                printf("\033[36m|__________________|\033[0m__________________|________________________|____________________|_______________________________|________________________________|\n\n")
+                printf("\033[36m|__________________|\033[0m__________________|_________________________________|____________________|_______________________________|________________________________|\n\n")
                 printf("\n\n")
             }' autotopten.txt
             
@@ -207,14 +206,14 @@ case $correct in
             echo -e "${Purple}Top 5 Scam Catagories and Amount Lost${Reset}"
             awk 'BEGIN{
                 FS=":";
-                printf("\033[36m____________________\033[0m_________________________________________________________________________________________________________________________________\n")
+                printf("\033[36m____________________\033[0m________________________________________________________________________________________________________________________________________________\n")
             }
             {
 
-                printf("\033[36m|%-19s|\033[0m%-19s|%-19s|%-20s|%-30s|%-36s|\n",$1,$2,$3,$4,$5,$6);
+                printf("\033[36m|%-19s|\033[0m%-19s|%-19s|%-35s|%-30s|%-36s|\n",$1,$2,$3,$4,$5,$6);
             }
             END{
-                printf("\033[36m|___________________|\033[0m___________________|___________________|____________________|______________________________|____________________________________|\n\n")
+                printf("\033[36m|___________________|\033[0m___________________|___________________|___________________________________|______________________________|____________________________________|\n\n")
                 printf("\n\n")
             }' autotoptenamount.txt
             
@@ -222,14 +221,14 @@ case $correct in
             echo -e "${Purple}Monthly Scam Report and Amount Lost${Reset}"
             awk 'BEGIN{
                 FS=":";
-                printf("\033[36m___________________\033[0m__________________________________________________________________________________________________________________________________\n")
+                printf("\033[36m___________________\033[0m___________________________________________________________________________________________________________________________________\n")
             }
             {
 
-                printf("\033[36m|%-17s|\033[0m%-10s|%-10s|%-10s|%-10s|%-10s|%-10s|%-10s|%-10s|%-10s|%-10s|%-10s|%-9s|\n",$1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13);
+                printf("\033[36m|%-17s|\033[0m%-10s|%-10s|%-10s|%-10s|%-10s|%-10s|%-10s|%-10s|%-10s|%-10s|%-10s|%-10s|\n",$1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13);
             }
             END{
-                printf("\033[36m|_________________|\033[0m__________|__________|__________|__________|__________|__________|__________|__________|__________|__________|__________|_________|\n\n")
+                printf("\033[36m|_________________|\033[0m__________|__________|__________|__________|__________|__________|__________|__________|__________|__________|__________|__________|\n\n")
             }' automonthly.txt
             #=======================================================================================================================================================================================================
 
@@ -238,10 +237,10 @@ case $correct in
             #Download Report in CSV
             #===================================================================================================================================        
             #take input form user
-            read -p "would you like to download monthly report in csv file? y or n: " 
+            read -p "would you like to download monthly report in csv file? Please type Y for yes or N for no: " 
             case $REPLY in
                 #if yes save data in csv
-                y)
+                Y)
                     awk 'BEGIN{
                         FS=":";
                         OFS=",";
@@ -252,15 +251,15 @@ case $correct in
                         } 
                         END{
                         }' automonthly.txt >monthlyreport.csv
-                    echo "Your file is dowloaded"
+                    echo -e "${Green}Your file is dowloaded${Reset}"
                 ;;
                 #if no do nothing
-                n)
+                N)
                     
                 ;;
                 #for all other options, print error
                 *)
-                    echo "Please enter y or n"
+                    echo -e "${Red}wrong entry!Only Y or N is accepted${Reset}"
                 ;;
             esac 
         done
