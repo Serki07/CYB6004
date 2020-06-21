@@ -1,7 +1,7 @@
 #!/bin/bash
 file=$1
 #read each line incuding the last line
- while read line || [[ -n $line ]];
+while read line || [[ -n $line ]];
 do
   
   #check if the line is a file
@@ -10,8 +10,8 @@ do
   #check if the line is directory
   elif [ -d "$line" ]; then
     echo "$line is a directory"
-   #otherwise print not known 
-else
+  #otherwise print not known 
+  else
     echo "$line I don’t know what that is!"
-fi
+  fi
 done < $file

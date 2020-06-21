@@ -9,11 +9,11 @@ echo
 savedpass='secret.txt'
 #compair enterd password with saved hash password
 if echo "$password" | sha256sum -c --status  "$savedpass" ; then
-#if correct Grant Access
-echo -e "${Green}Access Granted${Reset}"
+    #if correct Grant Access
+    echo -e "${Green}Access Granted${Reset}"
     exit 0
 else
-#otherwise, print error
+    #otherwise, print error
     echo -e "${Red}Access Denied${Reset}"
     exit 1
 fi
