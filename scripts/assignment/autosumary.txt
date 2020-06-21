@@ -1,3 +1,0 @@
-"stat_summary_amount_lost":90801407,
-Stat_Summary_Number_of_Reports":161528,
-Stat_Summary_Reports_with_Financial_losses":8.7,"charts":{
